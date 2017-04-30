@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - role: factorio
+      service_name: "ansible-test"
+      service_port: 12345
+      download_proto: http
+      download_domain: mock.factorio.local:8000

@@ -1,0 +1,10 @@
+[Unit]
+Description={{ description }}
+
+[Service]
+ExecStart={{ bin }} --start-server {{ save }} --port {{ service_port }} --server-settings {{ service_root }}/factorio/data/server-settings.json
+User={{ service_user }}
+Group={{ service_group }}
+
+[Install]
+WantedBy=multi-user.target
