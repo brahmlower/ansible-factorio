@@ -7,3 +7,9 @@
       service_port: 12345
       download_proto: http
       download_domain: mock.factorio.local:8000
+  tasks:
+    - name: Enable and start service
+      systemd:
+        name: "ansible-test"
+        enabled: yes
+        state: started

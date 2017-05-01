@@ -1,6 +1,6 @@
 FROM centos:centos7
 RUN yum install -y epel-release
-RUN yum install -y ansible shutil2
+RUN yum install -y ansible
 COPY . /root/roles/factorio/
 COPY tests/test.yml /root/
 CMD ansible-playbook ~/test.yml -c local
