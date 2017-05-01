@@ -7,6 +7,9 @@
       service_port: 12345
       download_proto: http
       download_domain: mock.factorio.local:8000
+      factorio_settings:
+        name: "My Asible Built Factorio Server"
+        description: "A test factorio server build via the bplower.factorio ansible role"
   tasks:
     - name: Enable and start service
       systemd:

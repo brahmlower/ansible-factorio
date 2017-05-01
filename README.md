@@ -74,8 +74,9 @@ Usage example:
       service_name: "my-factorio-service"
       server_version: "0.15.3"
       service_port: 12346
-      factorio_name: "The coolest server"
-      factorio_game_password: "Serv3r_Pa$$w0rd"
+      factorio_settings:
+        name: "The coolest server"
+        game_password: "Serv3r_Pa$$w0rd"
 ```
 
 ## License

@@ -28,4 +28,5 @@ trap cleanup EXIT
 # the test folder to the container and then runs the test playbook locally
 # within the container
 
-docker-compose -f tests/docker-compose.yml up --build 
+docker-compose -f tests/docker-compose.yml up --build
+exit 0
