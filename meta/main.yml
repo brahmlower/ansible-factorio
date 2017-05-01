@@ -29,10 +29,10 @@ galaxy_info:
      versions:
       - trusty
       - xenial
-      - zesty
-   - name: Debain
-     versions:
-      - jessie
+      # - zesty
+  #  - name: Debain
+  #    versions:
+  #     - jessie
 
   galaxy_tags:
     - factorio
