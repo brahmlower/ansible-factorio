@@ -2,7 +2,7 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - role: factorio
+    - role: factorio-test
       service_name: "ansible-test"
       service_port: 12345
       download_proto: http

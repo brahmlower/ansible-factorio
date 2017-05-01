@@ -10,7 +10,7 @@ download_url: "{{ download_proto }}://{{ download_domain }}/get-download/{{ serv
 # Configs for the service running the server
 service_user: "factorio"
 service_group: "factorio"
-service_root: "/home/{{ service_user }}/factorio/{{ service_name }}"
+service_root: "/home/{{ service_user }}/{{ service_name }}"
 factorio_default_save: "{{ service_root }}/factorio/saves/default-save.zip"
 factorio_target_save: "{{ factorio_default_save }}"
 
