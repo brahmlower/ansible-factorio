@@ -59,11 +59,32 @@
     state: directory
     mode: u+rwx
 
-# Create a settings file
+# Create a server-settings.json file
 - name: ({{ service_name }}) Create server-settings.json file
   copy:
-    content: "{{ factorio_settings | to_json }}"
+    content: "{{ factorio_server_settings | to_json }}"
     dest: "{{ service_root }}/factorio/data/server-settings.json"
+
+# Create a server-whitelist.json file
+- name: ({{ service_name }}) Create a server-whitelist.json file
+  copy:
+    content: "{{ factorio_server_whitelist | to_json }}"
+    dest: "{{ service_root }}/factorio/data/server-whitelist.json"
+  when: factorio_server_whitelist_enabled
+
+# Create a map-gen-settings.json file
+- name: ({{ server_name }}) Create a map-gen-settings.json file
+  copy:
+    content: "{{ factorio_map_gen_settings | to_json }}"
+    dest: "{{ service_root }}/factorio/data/map-gen-settings.json"
+  when: factorio_map_gen_settings_enabled
+
+# Create a map-settings.json file
+- name: ({{ server_name }}) Create a map-settings.json file
+  copy:
+    content: "{{ factorio_map_settings | to_json }}"
+    dest: "{{ service_root }}/factorio/data/map-settings.json"
+  when: factorio_map_settings_enabled
 
 # Create an empty save if one doesn't already exist
 - name: ({{ service_name }}) Check if existing saves
