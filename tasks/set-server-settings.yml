@@ -1,0 +1,7 @@
+
+# Set the content of server-settings.json
+
+- name: ({{ service_name }}) Create server-settings.json file
+  copy:
+    content: "{{ factorio_server_settings | to_json }}"
+    dest: "{{ service_root }}/factorio/data/server-settings.json"

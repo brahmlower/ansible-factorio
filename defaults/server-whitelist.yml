@@ -1,0 +1,8 @@
+
+# Settings for the server-whitelist.json file
+# Right now this is just an example of the default values as shown in the
+# server-whitelist.example.json file that's provided with the factorio server
+
+factorio_server_whitelist:
+  - Rseding91
+  - Oxyd

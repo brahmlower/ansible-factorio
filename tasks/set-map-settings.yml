@@ -1,0 +1,14 @@
+
+# Set the content of map-settings.json
+
+- name: ({{ server_name }}) Create map-settings.json file
+  copy:
+    content: "{{ factorio_map_settings | to_json }}"
+    dest: "{{ service_root }}/factorio/data/map-settings.json"
+  when: factorio_map_settings_enabled
+
+- name: ({{ service_name }}) Remove map-settings.json file
+  file:
+    path: "{{ service_root }}/factorio/data/map-settings.json"
+    state: absent
+  when: not factorio_map_settings_enabled

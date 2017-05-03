@@ -6,98 +6,106 @@
     msg: "The service name must be defined in the variable service_name"
   when: service_name is not defined
 
-- name: ({{ service_name }}) Check the service_port variable
+- name: "{{ansible_name_prefix }} Check the service_port variable"
   fail:
     msg: "The service port must be defined in the variable service_port"
   when: service_port is not defined
 
-- name: ({{ service_name }}) Create OS user for factorio
+- name: "{{ansible_name_prefix }} Create OS user for factorio"
   user:
     name: "{{ service_user }}"
     state: present
 
-- name: ({{ service_name }}) Create OS group for factorio
+- name: "{{ansible_name_prefix }} Create OS group for factorio"
   group:
     name: "{{ service_group }}"
     state: present
 
 # Download the factorio server version if needed
-- name: ({{ service_name }}) Make factorio bin source folder
+- name: "{{ansible_name_prefix }} Make factorio bin source folder"
   file:
     path: "{{ server_sources }}"
     state: directory
     mode: u+rwx
 
-- name: ({{ service_name }}) Check factorio bin version exists
+- name: "{{ansible_name_prefix }} Check factorio bin version exists"
   stat:
     path: "{{ server_sources }}/factorio-{{ server_version }}.tar.gz"
   register: factorio_bin
 
-- name: ({{ service_name }}) Download factorio headless server from {{ download_url }}
+- name: "{{ansible_name_prefix }} Download factorio headless server from {{ download_url }}"
   get_url:
     url: "{{ download_url }}"
     dest: "{{ server_sources }}/factorio-{{ server_version }}.tar.gz"
   when: factorio_bin.stat.exists == False
 
 # Copy the factorio version to the production location
-- name: ({{ service_name }}) Make factorio bin source folder
+- name: "{{ansible_name_prefix }} Make factorio bin source folder"
   file:
     path: "{{ service_root }}"
     state: directory
     mode: u+rwx
 
-- name: ({{ service_name }}) Extract Factorio headless server to {{ server_sources }}
+- name: "{{ ansible_name_prefix }} Extract Factorio headless server to {{ server_sources }}"
   unarchive:
     src: "{{ server_sources }}/factorio-{{ server_version }}.tar.gz"
     copy: no
     dest: "{{ service_root }}"
     creates: "{{ service_root }}/factorio"
 
-- name: ({{ service_name }}) Make sure game save directory exsits
+- name: "{{ ansible_name_prefix }} Make sure game save directory exsits"
   file:
     path: "{{ service_root }}/factorio/saves"
     state: directory
     mode: u+rwx
 
-# Create a server-settings.json file
-- name: ({{ service_name }}) Create server-settings.json file
-  copy:
-    content: "{{ factorio_server_settings | to_json }}"
-    dest: "{{ service_root }}/factorio/data/server-settings.json"
+- name: "{{ ansible_name_prefix }} Set server settings"
+  include: set-server-settings.yml
 
-# Create a server-whitelist.json file
-- name: ({{ service_name }}) Create a server-whitelist.json file
-  copy:
-    content: "{{ factorio_server_whitelist | to_json }}"
-    dest: "{{ service_root }}/factorio/data/server-whitelist.json"
-  when: factorio_server_whitelist_enabled
+# # Create a server-settings.json file
+# - name: ({{ service_name }}) Create server-settings.json file
+#   copy:
+#     content: "{{ factorio_server_settings | to_json }}"
+#     dest: "{{ service_root }}/factorio/data/server-settings.json"
 
-# Create a map-gen-settings.json file
-- name: ({{ server_name }}) Create a map-gen-settings.json file
-  copy:
-    content: "{{ factorio_map_gen_settings | to_json }}"
-    dest: "{{ service_root }}/factorio/data/map-gen-settings.json"
-  when: factorio_map_gen_settings_enabled
+- name: "{{ ansible_name_prefix }} Set server whitelist"
+  include: set-server-whitelist.yml
 
-# Create a map-settings.json file
-- name: ({{ server_name }}) Create a map-settings.json file
-  copy:
-    content: "{{ factorio_map_settings | to_json }}"
-    dest: "{{ service_root }}/factorio/data/map-settings.json"
-  when: factorio_map_settings_enabled
+# # Create a server-whitelist.json file
+# - name: ({{ service_name }}) Create a server-whitelist.json file
+#   copy:
+#     content: "{{ factorio_server_whitelist | to_json }}"
+#     dest: "{{ service_root }}/factorio/data/server-whitelist.json"
+#   when: factorio_server_whitelist_enabled
 
-# Create an empty save if one doesn't already exist
-- name: ({{ service_name }}) Check if existing saves
-  find:
-    paths: "{{ service_root }}/factorio/saves/"
-  register: save_items
+- name: "{{ ansible_name_prefix }} Set map gen settings"
+  include: set-map-gen-settings.yml
 
-- name: ({{ service_name }}) Create default save file
-  command: "{{ service_root }}/factorio/bin/x64/factorio --create {{ factorio_default_save }}"
-  when: save_items.matched == 0
+# # Create a map-gen-settings.json file
+# - name: ({{ server_name }}) Create a map-gen-settings.json file
+#   copy:
+#     content: "{{ factorio_map_gen_settings | to_json }}"
+#     dest: "{{ service_root }}/factorio/data/map-gen-settings.json"
+#   when: factorio_map_gen_settings_enabled
+
+- name: "{{ ansible_name_prefix }} Set map settings"
+  include: set-map-settings.yml
+
+# # Create a map-settings.json file
+# - name: ({{ server_name }}) Create a map-settings.json file
+#   copy:
+#     content: "{{ factorio_map_settings | to_json }}"
+#     dest: "{{ service_root }}/factorio/data/map-settings.json"
+#   when: factorio_map_settings_enabled
+
+# Create the save if one doesn't already exist
+- name: "{{ ansible_name_prefix }} Create default save file"
+  command: "{{ service_root }}/factorio/bin/x64/factorio --create {{ factorio_target_save }}"
+  args:
+    creates: "{{ factorio_target_save }}"
 
 # Set the permissions so only the user has access
-- name: ({{ service_name }}) Make {{ service_root }} owned by {{ service_user }}
+- name: "{{ ansible_name_prefix }} Make {{ service_root }} owned by {{ service_user }}"
   file:
     path: "{{ service_root }}"
     state: directory
@@ -106,7 +114,7 @@
     recurse: yes
 
 # Create the service
-- name: ({{ service_name }}) Create service file
+- name: "{{ ansible_name_prefix }} Create service file"
   template:
     src: service-template.service.j2
     dest: /etc/systemd/system/{{ service_name }}.service

@@ -1,0 +1,14 @@
+
+# Set the content of server-whitelist.json
+
+- name: ({{ service_name }}) Create server-whitelist.json file
+  copy:
+    content: "{{ factorio_server_whitelist | to_json }}"
+    dest: "{{ service_root }}/factorio/data/server-whitelist.json"
+  when: factorio_server_whitelist_enabled
+
+- name: ({{ service_name }}) Remove server-whitelist.json file
+  file:
+    path: "{{ service_root }}/factorio/data/server-whitelist.json"
+    state: absent
+  when: not factorio_server_whitelist_enabled

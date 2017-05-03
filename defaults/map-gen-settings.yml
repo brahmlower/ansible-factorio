@@ -1,0 +1,40 @@
+
+# Settings for the map-gen-settings.json file
+# Right now this is just an example of the default values as shown in the
+# map-gen-settings.example.json file that's provided with the factorio server
+
+factorio_map_gen_settings:
+  # Sizes can be specified as none, very-low, low, normal, high, very-high
+  terrain_segmentation: "normal"
+  water: "normal"
+  width: 0
+  height: 0
+  starting_area: "normal"
+  peaceful_mode: false
+  autoplace_controls:
+    coal:
+      frequency: "normal"
+      size: "normal"
+      richness: "normal"
+    copper-ore:
+      frequency: "normal"
+      size: "normal"
+      richness: "normal"
+    crude-oil:
+      frequency: "normal"
+      size: "normal"
+      richness: "normal"
+    enemy-base:
+      frequency: "normal"
+      size: "normal"
+      richness: "normal"
+    iron-ore:
+      frequency: "normal"
+      size: "normal"
+      richness: "normal"
+    stone:
+      frequency: "normal"
+      size: "normal"
+      richness: "normal"
+  # Use null for a random seed, number for a specific seed.
+  seed: null
