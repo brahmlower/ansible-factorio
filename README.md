@@ -1,6 +1,9 @@
 # Factorio
 
+[![Install from Ansible Galaxy](https://img.shields.io/badge/role-bplower.factorio-blue.svg)](https://galaxy.ansible.com/bplower/factorio/)
+
 A role for deploying a Factorio server.
+https://galaxy.ansible.com/bplower/factorio/
 
 ## Requirements
 
@@ -8,8 +11,8 @@ No requirements
 
 ## Role Variables
 
-These set the version of the server to run, and where to store the downloaded
-server binaries, and where to download the binaries from.
+These set the version of the server to run, where to download the binaries from,
+and where to store said binaries.
 
 ```
 server_version: "0.14.23"
@@ -21,13 +24,13 @@ download_url: "{{ download_proto }}://{{ download_domain }}/get-download/{{ serv
 
 ### Service settings
 
-These variables set how the service is run. These include the user and group to
-run the service as, in addition to
+These settings define how and where the service runs.
 
 ```
-service_user: "{{ service_name }}"
-service_group: "{{ service_name }}"
-service_root: "/opt/games/{{ service_name }}"
+service_name: "factorio-server"
+service_user: "factorio"
+service_group: "factorio"
+service_root: "/home/{{ service_user }}"
 factorio_default_save: "{{ service_root }}/factorio/saves/default-save.zip"
 factorio_target_save: "{{ factorio_default_save }}"
 ```
@@ -35,29 +38,54 @@ factorio_target_save: "{{ factorio_default_save }}"
 ### Factorio server settings
 
 A limited number of factorio settings have been implemented. These variables
-named the same as the factorio setting, but prefixed with `factorio_`.
+are defined under the `factorio_settings` variable, and are named the same as the setting key in the factorio settings file.
 
 ```
-factorio_name: "Default server"
-factorio_description: "Default description"
-factorio_max_players: 0
-factorio_token: ""
-factorio_game_password: ""
-factorio_require_user_verification: true
-factorio_max_upload_in_kilobytes_per_second: 0
-factorio_minimum_latency_in_ticks: 0
-factorio_ignore_player_limit_for_returning_players: false
-factorio_allow_commands: "admins-only"
-factorio_autosave_interval: 10
-factorio_autosave_slots: 5
-factorio_afk_autokick_interval: 0
-factorio_auto_pause: true
-factorio_only_admins_can_pause_the_game: true
-factorio_autosave_only_on_server: true
-factorio_admins: []
+factorio_settings:
+  name: "Default server"
+  description: "Default description"
+  max_players: 0
+  token: ""
+  game_password: ""
+  require_user_verification: true
+  max_upload_in_kilobytes_per_second: 0
+  minimum_latency_in_ticks: 0
+  ignore_player_limit_for_returning_players: false
+  allow_commands: "admins-only"
+  autosave_interval: 10
+  autosave_slots: 5
+  afk_autokick_interval: 0
+  auto_pause: true
+  only_admins_can_pause_the_game: true
+  autosave_only_on_server: true
+  admins: []
 ```
 
-TODO: Document the server settings not implemented.
+The same functionality is implemented for the server-whitelist, map-settings, and map-gen-settings files. The following is an example where in each file has a non-default value applied:
+
+```
+  - hosts: factorio-server.fqdn.local
+    roles:
+    - role: factorio
+      service_name: "my-factorio-service"
+      server_version: "0.15.3"
+      service_port: 12346
+      factorio_settings:
+        name: "The coolest server"
+        game_password: "Serv3r_Pa$$w0rd"
+      factorio_map_gen_settings:
+        water: "high"
+        autoplace_controles:
+          coal:
+            size: "very-low"
+      factorio_map_settings:
+        pollution:
+          enabled: false
+      factorio_server_whitelist:
+        - Oxyd
+```
+
+Examples of each of these files can be found in the defaults folder.
 
 ## Dependencies
 
