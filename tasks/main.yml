@@ -1,16 +1,6 @@
 ---
 # tasks file for factorio
 # Create the user and group to run the factorio server
-- name: Check service_name variable
-  fail:
-    msg: "The service name must be defined in the variable service_name"
-  when: service_name is not defined
-
-- name: "{{ansible_name_prefix }} Check the service_port variable"
-  fail:
-    msg: "The service port must be defined in the variable service_port"
-  when: service_port is not defined
-
 - name: "{{ansible_name_prefix }} Create OS user for factorio"
   user:
     name: "{{ service_user }}"
