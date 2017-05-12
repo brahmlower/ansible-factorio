@@ -1,7 +1,25 @@
 
 # Set the content of server-settings.json
 
-- name: ({{ service_name }}) Create server-settings.json file
+# Two tasks are used here as a somewhat lazy way around `factorio_server_settings`
+# being passed to the `combine()` function when it hasn't been defined by the
+# user. The default definition for it in defaults/main.py is an empty dict
+# which for some reason results in being interpreted as undefined.
+
+# Open a pull request if you know a better way
+
+- name: ({{ service_name }}) Create server-settings.json file (overwriting defaults)
   copy:
-    content: "{{ factorio_server_settings | to_json }}"
+    content: "{{ default_factorio_server_settings|combine(factorio_server_settings) | to_json }}"
     dest: "{{ service_root }}/factorio/data/server-settings.json"
+  when: factorio_server_settings
+  notify:
+  - Restart factorio service
+
+- name: ({{ service_name }}) Create server-settings.json file (using defaults)
+  copy:
+    content: "{{ default_factorio_server_settings | to_json }}"
+    dest: "{{ service_root }}/factorio/data/server-settings.json"
+  when: not factorio_server_settings
+  notify:
+  - Restart factorio service

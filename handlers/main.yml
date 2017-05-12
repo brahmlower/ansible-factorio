@@ -1,2 +1,13 @@
 ---
 # handlers file for factorio
+
+- name: Reload factorio server (daemon_reload)
+  systemd:
+    name: "{{ service_name }}"
+    daemon_reload: yes
+
+- name: Restart factorio service
+  systemd:
+    name: "{{ service_name }}"
+    state: restarted
+  when: service_restart_permitted

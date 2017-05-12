@@ -2,9 +2,7 @@
 # defaults file for factorio
 server_version: "0.14.23"
 server_sources: "/opt/games/sources/factorio"
-download_domain: www.factorio.com
-download_proto: https
-download_url: "{{ download_proto }}://{{ download_domain }}/get-download/{{ server_version }}/headless/linux64"
+download_url: "https://www.factorio.com/get-download/{{ server_version }}/headless/linux64"
 
 # Configs for the service running the server
 service_name: "factorio-server"
@@ -12,12 +10,18 @@ service_user: "factorio"
 service_group: "factorio"
 service_root: "/home/{{ service_user }}"
 service_port: 34197
+service_restart_permitted: true
 factorio_default_save: "{{ service_root }}/factorio/saves/default-save.zip"
 factorio_target_save: "{{ factorio_default_save }}"
 
 # Configs for the factorio server. These examples were copied from
 # server-settings.example.json and are saved in server-settings.json
-factorio_server_settings:
+factorio_server_settings: {}
+
+# Do not define server settings in this dictionary. This dictionary allows you
+# to overwrite a single setting without requiring you to provide other defaults.
+# See the documentation for more information.
+default_factorio_server_settings:
   name: "Name of the game as it will appear in the game listing"
   description: "Description of the game that will appear in the listing"
   visibility:

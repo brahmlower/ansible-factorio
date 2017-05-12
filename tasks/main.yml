@@ -59,44 +59,18 @@
     state: directory
     mode: u+rwx
 
+# Create the various settings files
 - name: "{{ ansible_name_prefix }} Set server settings"
   include: set-server-settings.yml
-
-# # Create a server-settings.json file
-# - name: ({{ service_name }}) Create server-settings.json file
-#   copy:
-#     content: "{{ factorio_server_settings | to_json }}"
-#     dest: "{{ service_root }}/factorio/data/server-settings.json"
 
 - name: "{{ ansible_name_prefix }} Set server whitelist"
   include: set-server-whitelist.yml
 
-# # Create a server-whitelist.json file
-# - name: ({{ service_name }}) Create a server-whitelist.json file
-#   copy:
-#     content: "{{ factorio_server_whitelist | to_json }}"
-#     dest: "{{ service_root }}/factorio/data/server-whitelist.json"
-#   when: factorio_server_whitelist_enabled
-
 - name: "{{ ansible_name_prefix }} Set map gen settings"
   include: set-map-gen-settings.yml
 
-# # Create a map-gen-settings.json file
-# - name: ({{ server_name }}) Create a map-gen-settings.json file
-#   copy:
-#     content: "{{ factorio_map_gen_settings | to_json }}"
-#     dest: "{{ service_root }}/factorio/data/map-gen-settings.json"
-#   when: factorio_map_gen_settings_enabled
-
 - name: "{{ ansible_name_prefix }} Set map settings"
   include: set-map-settings.yml
-
-# # Create a map-settings.json file
-# - name: ({{ server_name }}) Create a map-settings.json file
-#   copy:
-#     content: "{{ factorio_map_settings | to_json }}"
-#     dest: "{{ service_root }}/factorio/data/map-settings.json"
-#   when: factorio_map_settings_enabled
 
 # Create the save if one doesn't already exist
 - name: "{{ ansible_name_prefix }} Create default save file"
@@ -122,3 +96,6 @@
     bin: "{{ service_root }}/factorio/bin/x64/factorio"
     save: "{{ factorio_target_save }}"
     description: "Factorio {{ server_version }} {{ service_name }}"
+  notify:
+  - Reload factorio server (daemon_reload)
+  - Restart factorio service

@@ -6,9 +6,13 @@
     content: "{{ factorio_map_gen_settings | to_json }}"
     dest: "{{ service_root }}/factorio/data/map-gen-settings.json"
   when: factorio_map_gen_settings_enabled
+  notify:
+  - Restart factorio service
 
 - name: ({{ service_name }}) Remove map-gen-settings.json file
   file:
     path: "{{ service_root }}/factorio/data/map-gen-settings.json"
     state: absent
   when: not factorio_map_gen_settings_enabled
+  notify:
+  - Restart factorio service
