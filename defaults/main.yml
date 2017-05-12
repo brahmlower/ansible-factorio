@@ -11,12 +11,18 @@ service_name: "factorio-server"
 service_user: "factorio"
 service_group: "factorio"
 service_root: "/home/{{ service_user }}"
+service_port: 34197
 factorio_default_save: "{{ service_root }}/factorio/saves/default-save.zip"
 factorio_target_save: "{{ factorio_default_save }}"
 
 # Configs for the factorio server. These examples were copied from
 # server-settings.example.json and are saved in server-settings.json
-factorio_server_settings: {}
+factorio_server_settings:
+  name: "Name of the game as it will appear in the game listing"
+  description: "Description of the game that will appear in the listing"
+  visibility:
+    public: false
+    lan: true
 
 # server-whitelist.json settings
 factorio_server_whitelist_enabled: false

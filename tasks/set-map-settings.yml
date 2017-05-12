@@ -1,7 +1,7 @@
 
 # Set the content of map-settings.json
 
-- name: ({{ server_name }}) Create map-settings.json file
+- name: ({{ service_name }}) Create map-settings.json file
   copy:
     content: "{{ factorio_map_settings | to_json }}"
     dest: "{{ service_root }}/factorio/data/map-settings.json"
