@@ -1,6 +1,6 @@
 ---
 # defaults file for factorio
-server_version: "0.14.23"
+server_version: "0.17.79"
 server_sources: "/opt/games/sources/factorio"
 download_url: "https://www.factorio.com/get-download/{{ server_version }}/headless/linux64"
 
