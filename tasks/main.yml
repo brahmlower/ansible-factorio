@@ -1,10 +1,16 @@
 ---
 # tasks file for factorio
 # Create the user and group to run the factorio server
+- name: "{{ ansible_name_prefix }} Create OS group for factorio"
+  group:
+    name: "{{ service_group }}"
+    state: present
+
 - name: "{{ ansible_name_prefix }} Create OS user for factorio"
   user:
     name: "{{ service_user }}"
     state: present
+    group: "{{ service_group }}"
 
 - name: "{{ ansible_name_prefix }} Create OS group for factorio"
   group:
