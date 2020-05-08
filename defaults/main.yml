@@ -3,6 +3,7 @@
 server_version: "0.17.79"
 server_sources: "/opt/games/sources/factorio"
 download_url: "https://www.factorio.com/get-download/{{ server_version }}/headless/linux64"
+download_checksum: "sha256:9ace12fa986df028dc1851bf4de2cb038044d743e98823bc1c48ba21aa4d23df"
 
 # Configs for the service running the server
 service_name: "factorio-server"

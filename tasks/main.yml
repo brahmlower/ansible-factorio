@@ -27,6 +27,7 @@
   get_url:
     url: "{{ download_url }}"
     dest: "{{ server_sources }}/factorio-{{ server_version }}.tar.gz"
+    checksum: "{{ download_checksum }}"
   when: factorio_bin.stat.exists == False
 
 # Copy the factorio version to the production location
