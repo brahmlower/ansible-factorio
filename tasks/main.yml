@@ -18,17 +18,11 @@
     state: directory
     mode: u+rwx
 
-- name: "{{ ansible_name_prefix }} Check factorio bin version exists"
-  stat:
-    path: "{{ server_sources }}/factorio-{{ server_version }}.tar.gz"
-  register: factorio_bin
-
 - name: "{{ ansible_name_prefix }} Download factorio headless server from {{ download_url }}"
   get_url:
     url: "{{ download_url }}"
     dest: "{{ server_sources }}/factorio-{{ server_version }}.tar.gz"
     checksum: "{{ download_checksum }}"
-  when: factorio_bin.stat.exists == False
 
 # Copy the factorio version to the production location
 - name: "{{ ansible_name_prefix }} Make factorio bin source folder"
