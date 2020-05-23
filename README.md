@@ -230,3 +230,5 @@ by running `init.sh`. At this time, all it does is create a vendor folder and
 download the supported versions of the factorio server from www.factorio.com.
 The url structure has been copied in `ventor/mock.factorio.local/` to use for
 testing, that way tests don't hammer the production web server.
+
+Please make sure ansible-lint passes.
