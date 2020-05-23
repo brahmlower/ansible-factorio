@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include ansible-factorio"
+      include_role:
+        name: "ansible-factorio"
+      vars:
+        service_name: foobar
+        server_version: 0.18.25
