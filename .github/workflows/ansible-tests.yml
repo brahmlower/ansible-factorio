@@ -7,12 +7,17 @@ jobs:
   yamllint:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout'
-        uses: actions/checkout@master
-      - name: 'Yamllint'
-        uses: karancode/yamllint-github-action@master
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
         with:
-          yamllint_config_filepath: .yamllint
+          python-version: 3.7
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r dev-requirements.txt
+      - name: Test with molecule
+        run: make lint
   molecule:
     runs-on: ubuntu-latest
     steps:
@@ -25,22 +30,6 @@ jobs:
         run: |
           sudo apt install docker
           python -m pip install --upgrade pip
-          pip install ansible molecule[docker]
+          pip install -r dev-requirements.txt
       - name: Test with molecule
-        run: |
-          molecule test
-  # molecule:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       scenario:
-  #         - default
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #       with:
-  #         path: "${{ github.repository }}"
-  #     - uses: gofrolist/molecule-action@master
-  #       with:
-  #         molecule_options: --debug
-  #         molecule_command: test
+        run: make test
