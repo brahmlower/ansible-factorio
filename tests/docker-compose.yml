@@ -1,3 +1,4 @@
+---
 version: '2'
 services:
   centos-7:
@@ -5,7 +6,7 @@ services:
       context: ../.
       dockerfile: tests/docker/centos-7/dockerfile
     extra_hosts:
-     - "mock.factorio.local:172.17.0.1"
+      - "mock.factorio.local:172.17.0.1"
     image: ansible-centos-7
     privileged: true
   debian-jessie:
@@ -13,7 +14,7 @@ services:
       context: ../.
       dockerfile: tests/docker/debian-jessie/dockerfile
     extra_hosts:
-     - "mock.factorio.local:172.17.0.1"
+      - "mock.factorio.local:172.17.0.1"
     image: ansible-debian-jessie
     privileged: true
   ubuntu-trusty:
@@ -21,7 +22,7 @@ services:
       context: ../.
       dockerfile: tests/docker/ubuntu-trusty/dockerfile
     extra_hosts:
-     - "mock.factorio.local:172.17.0.1"
+      - "mock.factorio.local:172.17.0.1"
     image: ansible-ubuntu-trusty
     privileged: true
   ubuntu-xenial:
@@ -29,7 +30,7 @@ services:
       context: ../.
       dockerfile: tests/docker/ubuntu-xenial/dockerfile
     extra_hosts:
-     - "mock.factorio.local:172.17.0.1"
+      - "mock.factorio.local:172.17.0.1"
     image: ansible-ubuntu-xenial
     privileged: true
   ubuntu-zesty:
@@ -37,6 +38,6 @@ services:
       context: ../.
       dockerfile: tests/docker/ubuntu-zesty/dockerfile
     extra_hosts:
-     - "mock.factorio.local:172.17.0.1"
+      - "mock.factorio.local:172.17.0.1"
     image: ansible-ubuntu-zesty
     privileged: true

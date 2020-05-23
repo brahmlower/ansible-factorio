@@ -84,5 +84,5 @@
     save: "{{ factorio_target_save }}"
     description: "Factorio {{ server_version }} {{ service_name }}"
   notify:
-  - Reload factorio server (daemon_reload)
-  - Restart factorio service
+    - Reload factorio server (daemon_reload)
+    - Restart factorio service
