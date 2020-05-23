@@ -2,6 +2,7 @@
 extends: default
 
 rules:
+  empty-lines: disable
   braces:
     max-spaces-inside: 1
     level: error
