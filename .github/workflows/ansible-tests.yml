@@ -1,0 +1,46 @@
+
+# Got this action from: https://github.com/colin-mccarthy/ansible_lint_demo
+
+name: Ansible Lint
+on: pull_request
+jobs:
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@master
+      - name: 'Yamllint'
+        uses: karancode/yamllint-github-action@master
+        with:
+          yamllint_config_filepath: .yamllint
+  molecule:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: |
+          sudo apt install docker
+          python -m pip install --upgrade pip
+          pip install ansible molecule[docker]
+      - name: Test with molecule
+        run: |
+          molecule test
+  # molecule:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       scenario:
+  #         - default
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         path: "${{ github.repository }}"
+  #     - uses: gofrolist/molecule-action@master
+  #       with:
+  #         molecule_options: --debug
+  #         molecule_command: test
