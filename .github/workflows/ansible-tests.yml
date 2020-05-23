@@ -18,7 +18,7 @@ jobs:
           pip install -r dev-requirements.txt
       - name: Test with molecule
         run: make lint
-  molecule:
+  molecule_centos:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -32,4 +32,34 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r dev-requirements.txt
       - name: Test with molecule
-        run: make test
+        run: make test_centos
+  molecule_debian:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: |
+          sudo apt install docker
+          python -m pip install --upgrade pip
+          pip install -r dev-requirements.txt
+      - name: Test with molecule
+        run: make test_debian
+  molecule_ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: |
+          sudo apt install docker
+          python -m pip install --upgrade pip
+          pip install -r dev-requirements.txt
+      - name: Test with molecule
+        run: make test_ubuntu

@@ -8,5 +8,14 @@ help:  ## Display this help
 lint: ## Lint yaml files
 	yamllint .
 
-test: ## Run molecule tests
-	molecule test
+test_all: ## Run molecule tests
+	molecule test --all
+
+test_centos: ## Run molecule centos tests
+	molecule test --scenario-name centos
+
+test_debian: ## Run molecule debian tests
+	molecule test --scenario-name debian
+
+test_ubuntu: ## Run molecule ubuntu tests
+	molecule test --scenario-name ubuntu

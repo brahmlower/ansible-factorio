@@ -7,4 +7,4 @@
         name: "ansible-factorio"
       vars:
         service_name: foobar
-        server_version: 0.18.25
+        server_version: 0.17.79

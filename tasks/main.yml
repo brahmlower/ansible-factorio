@@ -24,6 +24,8 @@
     url: "{{ download_url }}"
     dest: "{{ server_sources }}/factorio-{{ server_version }}.tar.gz"
     checksum: "{{ download_checksum }}"
+  retries: 3
+  delay: 5
 
 # Copy the factorio version to the production location
 - name: "{{ ansible_name_prefix }} Make factorio bin source folder"
