@@ -1,36 +1,32 @@
 ---
 # tasks file for factorio
 # Create the user and group to run the factorio server
-- name: "{{ansible_name_prefix }} Create OS user for factorio"
-  user:
-    name: "{{ service_user }}"
-    state: present
-
-- name: "{{ansible_name_prefix }} Create OS group for factorio"
+- name: "{{ ansible_name_prefix }} Create OS group for factorio"
   group:
     name: "{{ service_group }}"
     state: present
 
+- name: "{{ ansible_name_prefix }} Create OS user for factorio"
+  user:
+    name: "{{ service_user }}"
+    state: present
+    group: "{{ service_group }}"
+
 # Download the factorio server version if needed
-- name: "{{ansible_name_prefix }} Make factorio bin source folder"
+- name: "{{ ansible_name_prefix }} Make factorio bin source folder"
   file:
     path: "{{ server_sources }}"
     state: directory
     mode: u+rwx
 
-- name: "{{ansible_name_prefix }} Check factorio bin version exists"
-  stat:
-    path: "{{ server_sources }}/factorio-{{ server_version }}.tar.gz"
-  register: factorio_bin
-
-- name: "{{ansible_name_prefix }} Download factorio headless server from {{ download_url }}"
+- name: "{{ ansible_name_prefix }} Download factorio headless server from {{ download_url }}"
   get_url:
     url: "{{ download_url }}"
     dest: "{{ server_sources }}/factorio-{{ server_version }}.tar.gz"
-  when: factorio_bin.stat.exists == False
+    checksum: "{{ download_checksum }}"
 
 # Copy the factorio version to the production location
-- name: "{{ansible_name_prefix }} Make factorio bin source folder"
+- name: "{{ ansible_name_prefix }} Make factorio bin source folder"
   file:
     path: "{{ service_root }}"
     state: directory
@@ -43,7 +39,7 @@
     dest: "{{ service_root }}"
     creates: "{{ service_root }}/factorio"
 
-- name: "{{ ansible_name_prefix }} Make sure game save directory exsits"
+- name: "{{ ansible_name_prefix }} Make sure game save directory exists"
   file:
     path: "{{ service_root }}/factorio/saves"
     state: directory

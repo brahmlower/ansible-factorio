@@ -42,11 +42,12 @@ More detailed information about these variables is as follows:
   Where to cache server binaries downloaded from the download_url
 
 - Variable: `server_version`<br>
-  Default: `"0.14.23"`<br>
+  Default: `"0.17.79"`<br>
   Choices:
-  - "0.15.10"
-  - "0.15.9"
-  - "0.15.6"
+  - "0.17.79"
+  - "0.17.74"
+  - "0.16.51"
+  - "0.15.40"
   - "0.14.23"
   - "0.13.20"
   - "0.12.35"
@@ -61,6 +62,14 @@ More detailed information about these variables is as follows:
   The URL to download the server binary from. This will only be downloaded if
   the path `"{{ server_sources }}/factorio-{{ server_version }}.tar.gz"` does
   not exist.
+
+- Variable: `download_checksum`<br>
+  Default: `"sha256:9ace12fa986df028dc1851bf4de2cb038044d743e98823bc1c48ba21aa4d23df"`
+  Comments:<br>
+  The checksum that must match the downloaded server binary. This ensures the integrity.
+  If you change the `download_url`, you need to adapt the checksum as well. To get the
+  checksum of a server binary, you can use `curl --silent --location <download_url> | sha256sum`.
+  To disable the checksum verification, just set it to an empty string (`""`).
 
 - Variable: `service_name`<br>
   Default: `"factorio-server"`<br>
