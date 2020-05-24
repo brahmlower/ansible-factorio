@@ -22,7 +22,7 @@ multiple factorio servers to be run simultaneously.
 
 ```
 server_sources: "/opt/games/sources/factorio"
-server_version: "0.14.23"
+server_version: "0.17.79"
 download_url: "https://www.factorio.com/get-download/{{ server_version }}/headless/linux64"
 service_name: "factorio-server"
 service_user: "factorio"
@@ -44,6 +44,7 @@ More detailed information about these variables is as follows:
 - Variable: `server_version`<br>
   Default: `"0.17.79"`<br>
   Choices:
+  - "0.18.26"
   - "0.17.79"
   - "0.17.74"
   - "0.16.51"
@@ -53,8 +54,8 @@ More detailed information about these variables is as follows:
   - "0.12.35"
 
   Comments:<br>
-  This is used by the default `download_url` and the tasks related to
-  uncompressing cached server downloads.
+   You must set the `download_checksum` value if you set this variable. This
+   value is used in the default `download_url`.
 
 - Variable: `download_url`<br>
   Default: `"https://www.factorio.com/get-download/{{ server_version }}/headless/linux64"`<br>
@@ -67,7 +68,7 @@ More detailed information about these variables is as follows:
   Default: `"sha256:9ace12fa986df028dc1851bf4de2cb038044d743e98823bc1c48ba21aa4d23df"`
   Comments:<br>
   The checksum that must match the downloaded server binary. This ensures the integrity.
-  If you change the `download_url`, you need to adapt the checksum as well. To get the
+  If you change the `download_url` or `server_version`, you need to adapt the checksum as well. To get the
   checksum of a server binary, you can use `curl --silent --location <download_url> | sha256sum`.
   To disable the checksum verification, just set it to an empty string (`""`).
 
@@ -217,18 +218,39 @@ An example of multiple servers on a single host:
 
 GNU GPLv3
 
-# Development
+# Development & Contributions
+
+I don't use this project regularly anymore, but I try to keep it up to date when
+possible. If you have any issues or questions about it, I encourage you to open
+a PR or issue.
 
 ## Testing
 
-Tests are run by applying example playbooks to docker instances. All testing
-resources (save for the `test.sh` script in the root) can be found in the `tests`
-directory. At this time, there is only one test playbook (`tests/test.yml`).
+This role uses yamllint for yaml validation, and molecule + docker for testing.
+Both tools can be installed using the `dev-requirements.txt` file. You will need
+to install docker separately.
 
-Before running tests, you will need to initialize your development environment
-by running `init.sh`. At this time, all it does is create a vendor folder and
-download the supported versions of the factorio server from www.factorio.com.
-The url structure has been copied in `ventor/mock.factorio.local/` to use for
-testing, that way tests don't hammer the production web server.
+```
+pip install -r dev-requirements.txt`
+```
 
-Please make sure ansible-lint passes.
+Grouping all supported platforms together caused issues for CI, so the test are
+split into 3 scenarios based on the platforms being tested.
+
+The makefile can be used to start each of the tests, and supports a helpmenu with
+descriptions for each target:
+
+```
+$ make help
+
+Usage:
+  make
+
+Targets:
+  help        Display this help
+  lint        Lint yaml files
+  test_all    Run all molecule tests
+  test_centos  Run molecule centos tests
+  test_debian  Run molecule debian tests
+  test_ubuntu  Run molecule ubuntu tests
+```
