@@ -1,4 +1,4 @@
-
+---
 # Set the content of server-whitelist.json
 
 - name: ({{ service_name }}) Create server-whitelist.json file
@@ -7,7 +7,7 @@
     dest: "{{ service_root }}/factorio/data/server-whitelist.json"
   when: factorio_server_whitelist_enabled
   notify:
-  - Restart factorio service
+    - Restart factorio service
 
 - name: ({{ service_name }}) Remove server-whitelist.json file
   file:
@@ -15,4 +15,4 @@
     state: absent
   when: not factorio_server_whitelist_enabled
   notify:
-  - Restart factorio service
+    - Restart factorio service

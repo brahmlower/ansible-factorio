@@ -1,13 +1,13 @@
-
+---
 # Settings for the map-settings.json file
 # Right now this is just an example of the default values as shown in the
 # map-settings.example.json file that's provided with the factorio server
 
 factorio_map_settings:
   difficulty_settings:
-     recipe_difficulty: 1
-     technology_difficulty: 1
-     technology_price_multiplier: 1
+    recipe_difficulty: 1
+    technology_difficulty: 1
+    technology_price_multiplier: 1
   pollution:
     enabled: true
     # these are values for 60 ticks (1 simulated second) amount that is

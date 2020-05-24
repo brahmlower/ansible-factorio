@@ -31,14 +31,14 @@ default_factorio_server_settings:
 
 # server-whitelist.json settings
 factorio_server_whitelist_enabled: false
-#factorio_server_whitelist: []
+# factorio_server_whitelist: []
 
 # map-gen-settings.json settings
 factorio_map_gen_settings_enabled: false
-#factorio_map_gen_settings: {}
+# factorio_map_gen_settings: {}
 
 # map-settings.json settings
 factorio_map_settings_enabled: false
-#factorio_map_settings: {}
+# factorio_map_settings: {}
 
 ansible_name_prefix: "({{ service_name }})"

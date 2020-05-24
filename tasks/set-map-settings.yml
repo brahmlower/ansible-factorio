@@ -1,4 +1,4 @@
-
+---
 # Set the content of map-settings.json
 
 - name: ({{ service_name }}) Create map-settings.json file
@@ -7,7 +7,7 @@
     dest: "{{ service_root }}/factorio/data/map-settings.json"
   when: factorio_map_settings_enabled
   notify:
-  - Restart factorio service
+    - Restart factorio service
 
 - name: ({{ service_name }}) Remove map-settings.json file
   file:
@@ -15,4 +15,4 @@
     state: absent
   when: not factorio_map_settings_enabled
   notify:
-  - Restart factorio service
+    - Restart factorio service

@@ -1,4 +1,4 @@
-
+---
 # Set the content of server-settings.json
 
 # Two tasks are used here as a somewhat lazy way around `factorio_server_settings`
@@ -14,7 +14,7 @@
     dest: "{{ service_root }}/factorio/data/server-settings.json"
   when: factorio_server_settings
   notify:
-  - Restart factorio service
+    - Restart factorio service
 
 - name: ({{ service_name }}) Create server-settings.json file (using defaults)
   copy:
@@ -22,4 +22,4 @@
     dest: "{{ service_root }}/factorio/data/server-settings.json"
   when: not factorio_server_settings
   notify:
-  - Restart factorio service
+    - Restart factorio service
