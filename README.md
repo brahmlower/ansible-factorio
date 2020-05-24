@@ -1,6 +1,7 @@
 # Factorio
 
 [![Install from Ansible Galaxy](https://img.shields.io/badge/role-bplower.factorio-blue.svg)](https://galaxy.ansible.com/bplower/factorio/)
+![Ansible Lint](https://github.com/bplower/ansible-factorio/workflows/Ansible%20Lint/badge.svg)
 
 A role for creating Factorio servers
 https://galaxy.ansible.com/bplower/factorio/
