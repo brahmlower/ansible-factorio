@@ -49,16 +49,16 @@
 
 # Create the various settings files
 - name: "{{ ansible_name_prefix }} Set server settings"
-  include: set-server-settings.yml
+  include_tasks: set-server-settings.yml
 
 - name: "{{ ansible_name_prefix }} Set server whitelist"
-  include: set-server-whitelist.yml
+  include_tasks: set-server-whitelist.yml
 
 - name: "{{ ansible_name_prefix }} Set map gen settings"
-  include: set-map-gen-settings.yml
+  include_tasks: set-map-gen-settings.yml
 
 - name: "{{ ansible_name_prefix }} Set map settings"
-  include: set-map-settings.yml
+  include_tasks: set-map-settings.yml
 
 # Create the save if one doesn't already exist
 - name: "{{ ansible_name_prefix }} Create default save file"
